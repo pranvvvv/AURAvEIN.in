@@ -1,0 +1,72 @@
+[
+  {
+    "code": "FVE4TRD5",
+    "name": "ROY20",
+    "description": "WEAR YOUR AURA",
+    "discountType": "percentage",
+    "discountValue": 5,
+    "maxDiscount": 98,
+    "minOrderAmount": 996,
+    "maxUsage": 10,
+    "expiryDate": "2025-08-29",
+    "isActive": true,
+    "usedCount": 0,
+    "id": "1754321286516"
+  },
+  {
+    "code": "YV9LFEOU",
+    "name": "AURA",
+    "description": "WEAR YOUR AURA",
+    "discountType": "percentage",
+    "discountValue": 5,
+    "maxDiscount": 100,
+    "minOrderAmount": 997,
+    "maxUsage": 21,
+    "expiryDate": "2025-08-31",
+    "isActive": true,
+    "usedCount": 0,
+    "id": "1754466362448"
+  },
+  {
+    "code": "VIUICQ0C",
+    "name": "rs6e",
+    "description": "u tdi77xi",
+    "discountType": "percentage",
+    "discountValue": 10,
+    "maxDiscount": 149,
+    "minOrderAmount": 1005,
+    "maxUsage": 10,
+    "expiryDate": "2025-08-30",
+    "isActive": true,
+    "usedCount": 0,
+    "id": "1754477241727"
+  },
+  {
+    "code": "EKIBM787",
+    "name": "kifri4",
+    "description": "kjwebfuweg",
+    "discountType": "percentage",
+    "discountValue": 10,
+    "maxDiscount": 10,
+    "minOrderAmount": 998,
+    "maxUsage": 19,
+    "expiryDate": "2025-08-19",
+    "isActive": true,
+    "usedCount": 0,
+    "id": "1755504956788"
+  },
+  {
+    "code": "ROY10",
+    "name": "roy",
+    "description": "ondcdoef",
+    "discountType": "percentage",
+    "discountValue": 10,
+    "maxDiscount": 10,
+    "minOrderAmount": 999,
+    "maxUsage": 50,
+    "expiryDate": "2025-08-31",
+    "isActive": true,
+    "usedCount": 0,
+    "id": "1755517169174"
+  }
+]
