@@ -66,6 +66,9 @@ export default function ShopPage() {
           throw new Error(err.error || 'Failed to load products');
         }
         const productsData = await response.json();
+        if (!Array.isArray(productsData)) {
+          throw new Error('Invalid products data received from API.');
+        }
         setProducts(productsData);
         setFilteredProducts(productsData);
       } catch (error: any) {
