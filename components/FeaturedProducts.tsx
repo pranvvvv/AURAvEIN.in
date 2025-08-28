@@ -40,26 +40,53 @@ interface Product {
 
 export default function FeaturedProducts() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const response = await fetch('/api/products');
-        const productsData = await response.json();
-        // Sort limited edition products first, then by featured status
-        const sortedProducts = productsData.sort((a: any, b: any) => {
+        setLoading(true)
+        setError(null)
+        const response = await fetch('/api/products')
+        if (!response.ok) throw new Error('Failed to fetch products')
+        const productsData = await response.json()
+        if (!Array.isArray(productsData)) throw new Error('Invalid products response')
+
+        // Normalize ID and filter featured + active
+        const normalized = productsData.map((p: any) => ({ ...p, id: p.id || p._id || String(p._id) }))
+        const filtered = normalized.filter((p: any) => p.isActive !== false)
+
+        // Sort limited edition products first, then leave rest in same order
+        const sortedProducts = filtered.sort((a: any, b: any) => {
           if (a.isLimitedEdition && !b.isLimitedEdition) return -1;
           if (!a.isLimitedEdition && b.isLimitedEdition) return 1;
           return 0;
-        });
-        setFeaturedProducts(sortedProducts);
+        })
+        setFeaturedProducts(sortedProducts)
       } catch (error) {
         console.error('Error loading products:', error);
-        setFeaturedProducts([]);
+        setFeaturedProducts([])
+        setError((error as any)?.message || 'Failed to load featured products')
+      } finally {
+        setLoading(false)
       }
     };
     loadProducts();
   }, []);
+
+  if (loading) {
+    return (
+      <section className="py-10 md:py-16 bg-gray-50">
+        <div className="w-full max-w-[1440px] mx-auto px-2 sm:px-6 lg:px-8">
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading featured products...</p>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   if (featuredProducts.length === 0) {
     return (
@@ -70,7 +97,7 @@ export default function FeaturedProducts() {
             <div className="flex flex-col items-center justify-center py-12">
               <ShoppingBag className="w-16 h-16 text-gray-300 mb-4" />
               <p className="text-gray-500 text-lg mb-2">No featured products available</p>
-              <p className="text-gray-400 text-sm">Check back soon for new arrivals!</p>
+              <p className="text-gray-400 text-sm">{error || 'Check back soon for new arrivals!'}</p>
             </div>
           </div>
         </div>

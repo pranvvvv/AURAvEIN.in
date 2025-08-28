@@ -35,3 +35,15 @@ export async function dbConnect() {
   if (mongoose.connection.readyState >= 1) return;
   return mongoose.connect(MONGODB_URI);
 }
+
+// Log unhandled rejections to avoid silent crashes during DB connection issues
+if (typeof process !== 'undefined' && process && typeof process.on === 'function') {
+  process.on('unhandledRejection', (reason, p) => {
+    try {
+      // eslint-disable-next-line no-console
+      console.error('Unhandled Rejection at Promise', p, 'reason:', reason);
+    } catch (err) {
+      // ignore
+    }
+  });
+}

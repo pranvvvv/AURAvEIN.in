@@ -1,9 +1,8 @@
 "use client"
 
 import type React from "react"
-import { Inter } from "next/font/google"
 import { useEffect } from "react"
-import "./globals.css"
+import { Inter } from "next/font/google"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import NewsletterPopup from "@/components/NewsletterPopup"
@@ -14,11 +13,7 @@ import { initializeData } from "@/lib/hybridService"
 
 const inter = Inter({ subsets: ["latin"] })
 
-export default function ClientLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function ClientLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Initialize localStorage data on app start with error handling
     try {

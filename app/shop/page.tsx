@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import ProductCard from "@/components/ProductCard"
-import { products } from "@/lib/data"
 
 interface Product {
   id: string
@@ -58,19 +57,21 @@ export default function ShopPage() {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        setLoading(true);
-        setError(null);
-        const response = await fetch('/api/products');
-        if (!response.ok) {
-          const err = await response.json();
-          throw new Error(err.error || 'Failed to load products');
-        }
-        const productsData = await response.json();
-        if (!Array.isArray(productsData)) {
-          throw new Error('Invalid products data received from API.');
-        }
-        setProducts(productsData);
-        setFilteredProducts(productsData);
+          setLoading(true);
+          setError(null);
+          const response = await fetch('/api/products');
+          if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.error || 'Failed to load products');
+          }
+          const productsData = await response.json();
+          if (!Array.isArray(productsData)) {
+            throw new Error('Invalid products data received from API.');
+          }
+          // Normalize product shape so components can use `id` consistently
+          const normalized = productsData.map((p: any) => ({ ...p, id: p.id || p._id || String(p._id) }));
+          setProducts(normalized);
+          setFilteredProducts(normalized);
       } catch (error: any) {
         console.error('Error loading products:', error);
         setError(error.message || 'Failed to load products. Please try again later.');

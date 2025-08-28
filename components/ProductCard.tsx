@@ -173,8 +173,11 @@ export default function ProductCard({ product, viewMode = "grid", overlaySetting
     }
   }
 
-  const formatPrice = (price: number) => {
-    return `₹${price.toLocaleString()}`
+  const formatPrice = (price?: number | null) => {
+    if (price === null || price === undefined) return `₹0`
+    const n = Number(price)
+    if (!isFinite(n) || Number.isNaN(n)) return `₹0`
+    return `₹${n.toLocaleString()}`
   }
 
   // Get button icon component

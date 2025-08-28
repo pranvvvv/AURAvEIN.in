@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { loginUser, registerUser, logoutUser, getCurrentUser } from "@/lib/hybridService"
-import { loginAdmin, getCurrentAdmin, logoutAdmin } from "@/lib/firebaseService"
+import { getCurrentAdmin, logoutAdmin } from "@/lib/firebaseService"
 
 interface User {
   id: string
@@ -78,30 +78,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       console.log('Login attempt for:', email)
       
-      // First try to login as admin
+      // First try server-side admin login (sets httpOnly token cookie)
       try {
-        console.log('Attempting admin login...')
-        const adminData = await loginAdmin(email, password)
-        console.log('Admin login successful:', adminData)
-        console.log('Setting user state with admin data:', adminData)
-        setUser(adminData)
-        console.log('User state set, redirecting to admin...')
-        
-        // Verify admin session is stored
-        const storedSession = localStorage.getItem('admin_session')
-        console.log('Stored admin session:', storedSession)
-        
-        // Force a small delay to ensure state is updated
-        setTimeout(() => {
-          console.log('Redirecting to admin page...')
-          router.push("/admin")
-        }, 100)
-        
-        return
-      } catch (adminError) {
-        console.log('Admin login failed:', adminError)
-        // If admin login fails, try regular user login
-        console.log('Not an admin, trying regular user login...')
+        const res = await fetch('/api/auth/admin-login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        })
+        if (res.ok) {
+          const adminData = await res.json()
+          setUser(adminData)
+          router.push('/admin')
+          return
+        }
+        console.log('Server admin login failed, falling back to client admin login')
+      } catch (err) {
+        console.log('Error calling server admin login:', err)
       }
 
       // Try regular user login
