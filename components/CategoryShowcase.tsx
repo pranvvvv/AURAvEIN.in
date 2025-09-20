@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { getCategories } from "@/lib/firebaseService"
 
 interface Category {
   id: string
@@ -27,8 +26,9 @@ export default function CategoryShowcase() {
         setIsLoading(true)
         setError(null)
         
-        const categoriesData = await getCategories()
-        setCategories(categoriesData as Category[])
+        // Backend removed - return empty categories
+        const categoriesData: Category[] = []
+        setCategories(categoriesData)
         setIsLoading(false)
       } catch (err) {
         console.error('Error loading categories:', err)

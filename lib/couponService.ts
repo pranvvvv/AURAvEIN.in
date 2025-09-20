@@ -37,9 +37,12 @@ export const addCoupon = async (couponData: Omit<Coupon, 'id' | 'createdAt'>): P
       body: JSON.stringify(couponData)
     });
     
-    if (!res.ok) throw new Error('Failed to add coupon');
-    
     const result = await res.json();
+    
+    if (!res.ok) {
+      throw new Error(result.error || 'Failed to add coupon');
+    }
+    
     return result;
   } catch (error) {
     console.error("Error adding coupon: ", error);

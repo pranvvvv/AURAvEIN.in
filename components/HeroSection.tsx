@@ -11,25 +11,20 @@ export default function HeroSection() {
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   const slides = [ 
-    {
-      video: "/video.mp4",
-      title: "OVERSIZED T-SHIRTS",
-      subtitle: "PREMIUM QUALITY UNISEX DESIGNS",
-      buttonText: "SHOP NOW",
-      buttonLink: "/shop",
-    },
-    {
-      image: "/img.jpg",
-      title: "NEW COLLECTION",
-      subtitle: "EXCLUSIVE DESIGNS FOR EVERY STYLE",
-      buttonText: "DISCOVER",
-      buttonLink: "/shop",
-    },
-    {
-      image: "/img1.jpg",
+
+     {
+      video: "/IMG_7211.MP4",
       title: "LIMITED EDITION",
       subtitle: "GET THEM BEFORE THEY'RE GONE",
       buttonText: "EXPLORE",
+      buttonLink: "/shop",
+    },
+  
+    {
+      image: "/IMG_7224.JPG",
+      title: "NEW COLLECTION",
+      subtitle: "EXCLUSIVE DESIGNS FOR EVERY STYLE",
+      buttonText: "DISCOVER",
       buttonLink: "/shop",
     },
   

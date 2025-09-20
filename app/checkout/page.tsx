@@ -161,11 +161,6 @@ export default function Checkout() {
 
     setLoading(true)
     try {
-      // Apply coupon if used
-      if (appliedCoupon) {
-        applyCoupon(appliedCoupon.code)
-      }
-
       // Create order
       const order: Order = {
         id: Date.now().toString(),
@@ -187,6 +182,24 @@ export default function Checkout() {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         estimatedDelivery: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days from now
+      }
+
+      // Mark coupon as used if applied
+      if (appliedCoupon?.code) {
+        try {
+          await fetch('/api/coupons/validate', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              code: appliedCoupon.code
+            })
+          });
+        } catch (error) {
+          console.error('Error marking coupon as used:', error);
+          // Continue with order processing even if coupon update fails
+        }
       }
 
       // Save order

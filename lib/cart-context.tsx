@@ -1,7 +1,8 @@
 "use client"
 
 import type React from "react"
-import { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useContext, useState } from "react"
+import useLocalStorage from "@/hooks/useLocalStorage"
 
 interface CartItem {
   id: string
@@ -37,69 +38,9 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
-// Safe localStorage operations with error handling
-const safeLocalStorageSet = (key: string, value: string): boolean => {
-  try {
-    localStorage.setItem(key, value)
-    return true
-  } catch (error) {
-    console.warn('LocalStorage quota exceeded or unavailable:', error)
-    // Clear old data if quota exceeded
-    if (error instanceof Error && error.name === 'QuotaExceededError') {
-      try {
-        // Clear other non-essential localStorage items
-        const keysToKeep = ['dope-cart', 'dope_current_user', 'dope_products']
-        const allKeys = Object.keys(localStorage)
-        allKeys.forEach(key => {
-          if (!keysToKeep.includes(key)) {
-            localStorage.removeItem(key)
-          }
-        })
-        // Try again after clearing
-        localStorage.setItem(key, value)
-        return true
-      } catch (retryError) {
-        console.error('Failed to save to localStorage even after cleanup:', retryError)
-        return false
-      }
-    }
-    return false
-  }
-}
-
-const safeLocalStorageGet = (key: string): string | null => {
-  try {
-    return localStorage.getItem(key)
-  } catch (error) {
-    console.warn('Failed to read from localStorage:', error)
-    return null
-  }
-}
-
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [cartItems, setCartItems] = useLocalStorage<CartItem[]>("dope-cart", [])
   const [appliedCoupon, setAppliedCoupon] = useState<any | null>(null)
-
-  // Load cart from localStorage on mount
-  useEffect(() => {
-    const savedCart = safeLocalStorageGet("dope-cart")
-    if (savedCart) {
-      try {
-        const parsedCart = JSON.parse(savedCart)
-        setCartItems(Array.isArray(parsedCart) ? parsedCart : [])
-      } catch (error) {
-        console.warn('Failed to parse cart data:', error)
-        setCartItems([])
-      }
-    }
-  }, [])
-
-  // Save cart to localStorage whenever it changes
-  useEffect(() => {
-    if (cartItems.length >= 0) {
-      safeLocalStorageSet("dope-cart", JSON.stringify(cartItems))
-    }
-  }, [cartItems])
 
   const addToCart = (product: any, size: string, color?: string, quantity = 1) => {
     setCartItems((prev) => {

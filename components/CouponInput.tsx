@@ -1,6 +1,5 @@
 "use client"
 import { useState } from 'react'
-import { validateCoupon } from '@/lib/firebaseService'
 import { Tag, Check, X } from 'lucide-react'
 
 interface CouponInputProps {
@@ -32,7 +31,18 @@ export default function CouponInput({
     setMessage('')
 
     try {
-      const result = await validateCoupon(couponCode.toUpperCase(), cartTotal)
+      const response = await fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          code: couponCode,
+          cartTotal: cartTotal
+        })
+      });
+
+      const result = await response.json();
       
       if (result.valid) {
         setMessage(result.message)

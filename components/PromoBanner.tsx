@@ -8,7 +8,7 @@ export default function PromoBanner() {
         <div className="relative overflow-hidden rounded-2xl bg-gray-900 text-white">
           <div className="absolute inset-0">
             <Image
-              src="/img.jpg"
+              src="/IMG_7224.JPG"
               alt="Promo Background"
               fill
               className="object-cover opacity-30"

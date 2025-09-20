@@ -1,7 +1,7 @@
 
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ShoppingBag, User, Menu, X, Search, Heart, LogOut } from "lucide-react"
@@ -13,13 +13,15 @@ import { TopAnnouncementBar } from "./TopAnnouncementBar"
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { cartItems, getCartItemCount } = useCart()
+  const [showCartCount, setShowCartCount] = useState(false)
+  useEffect(() => { setShowCartCount(true) }, [])
   const { user, isAuthenticated, isAdmin, logout } = useAuth()
   const router = useRouter()
 
   const handleLogout = async () => {
     try {
       await logout()
-      router.push("/")
+      router.refresh() // Use refresh to re-fetch server components and get a clean state
     } catch (error) {
       console.error('Logout error:', error)
     }
@@ -27,8 +29,8 @@ export default function Header() {
 
   return (
     <>
-      <TopAnnouncementBar />
-      <header className="bg-white border-b sticky top-0 z-50">
+  <TopAnnouncementBar />
+  <header className="bg-white border-b sticky top-10 z-40">
         <div className="container mx-auto px-2 sm:px-4">
           <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo */}
@@ -90,7 +92,7 @@ export default function Header() {
               <Link href="/cart">
                 <Button variant="ghost" size="sm" className="relative p-2">
                   <ShoppingBag className="w-4 h-4" />
-                  {getCartItemCount() > 0 && (
+                  {showCartCount && getCartItemCount() > 0 && (
                     <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center text-[10px] sm:text-xs">
                       {getCartItemCount()}
                     </span>

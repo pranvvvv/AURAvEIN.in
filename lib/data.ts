@@ -4,11 +4,11 @@ const initialProducts = [
     id: "1",
     name: "BROWN TIGER T-SHIRT",
     price: 4495,
-    image: "/placeholder.svg?height=400&width=400",
+    image: "/AURavEIN - 2025-09-19T221716.567.png",
     images: [
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-RMkXrTxnA1vpz17GZLeE524Ifu4M1Q.png",
-      "/placeholder.svg?height=400&width=400",
-      "/placeholder.svg?height=400&width=400",
+      "/AURavEIN - 2025-09-19T221716.567.png",
+      "public/AURAvEIN - 2025-09-19T232434.881.png",
+      "",
     ],
     video: "",
     rating: 0,
@@ -131,10 +131,10 @@ export const products = initialProducts
 export const blogPosts = [
   {
     id: "1",
-    title: "THE ART OF OVERSIZED FASHION",
+    title: "WEAR YOURE AURA",
     excerpt:
       "Explore the latest trends in oversized fashion and discover how to style your AURAvEIN t-shirts for maximum impact.",
-    image: "/page.jpg",
+    image: "/IMG_7227.JPG",
     date: "March 15, 2025",
     author: "simon justin",
     content:

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { useAuth } from "@/lib/auth-context"
+import { useAdminAuth } from "@/lib/admin-auth"
 import {
   Users, 
   Package, 
@@ -21,7 +21,7 @@ import {
 
 export default function AdminDashboard() {
   const router = useRouter()
-  const { user, loading, logout, isAdmin } = useAuth()
+  const { adminUser, loading, isAuthenticated, logout } = useAdminAuth()
   const [stats, setStats] = useState({
     totalUsers: 0,
     totalProducts: 0,
@@ -30,26 +30,20 @@ export default function AdminDashboard() {
   })
 
   useEffect(() => {
-    // Check if user is authenticated and is admin
+    // Check if admin is authenticated
     if (!loading) {
-      if (!user) {
-        router.push("/login")
-      return
-    }
-
-      if (!isAdmin) {
-        router.push("/login")
+      if (!isAuthenticated) {
+        router.push("/admin/login")
         return
       }
     }
-  }, [user, loading, isAdmin, router])
+  }, [isAuthenticated, loading, router])
 
   const handleLogout = async () => {
     try {
-      await logout()
-      router.push("/login")
+      logout()
     } catch (error) {
-      console.error("Logout error:", error)
+      console.error('Logout error:', error)
     }
   }
 
@@ -58,19 +52,19 @@ export default function AdminDashboard() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
+          <p className="text-gray-600">Checking authentication...</p>
         </div>
       </div>
     )
   }
 
-  // If not authenticated or not admin, show loading (will redirect)
-  if (!user || !isAdmin) {
+  // If not authenticated, show loading (will redirect)
+  if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
-          <p className="text-gray-600">Checking permissions...</p>
+          <p className="text-gray-600">Redirecting to login...</p>
         </div>
       </div>
     )
@@ -84,8 +78,8 @@ export default function AdminDashboard() {
           <div className="flex justify-between items-center py-4">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-              <p className="text-sm text-gray-600">Welcome back, {user.name}</p>
-      </div>
+              <p className="text-sm text-gray-600">Welcome back, {adminUser?.name || 'Admin'}</p>
+            </div>
             <Button onClick={handleLogout} variant="outline" className="flex items-center gap-2">
               <LogOut className="w-4 h-4" />
               Logout

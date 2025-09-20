@@ -1,14 +1,10 @@
 # Auravein - Premium Fashion E-commerce
 
-A modern, responsive e-commerce platform built with Next.js 14, featuring a fully dynamic Firebase-backed product system with admin-editable overlays and real-time updates.
+Modern, responsive e-commerce platform built with Next.js 14.
 
 ## ✨ Enhanced Features
 
-### 🔄 **Dynamic Product Overlays (Firebase-Backed)**
-- **Fully Configurable Overlays**: All product overlays are now dynamically controlled from Firebase
-- **Admin-Editable Settings**: Admins can configure size selectors, color selectors, add-to-cart buttons per product
-- **Real-Time Updates**: Changes in admin panel instantly reflect on the homepage
-- **Persistent Data**: All product data is stored in Firebase Firestore for consistency across devices
+
 
 ### 🛍️ **Interactive Featured Products**
 - **Fully Clickable Product Cards**: Each product in the Featured Products section is now fully interactive
@@ -30,10 +26,9 @@ A modern, responsive e-commerce platform built with Next.js 14, featuring a full
 - **Quantity Management**: Easy quantity adjustment on product pages
 
 ### 🔐 **Secure Admin Dashboard**
-- **Firebase Authentication**: Secure admin login with Firebase Auth
-- **Full CRUD Operations**: Create, read, update, delete products with overlay settings
-- **Real-Time Management**: Instant updates across all devices
-- **Overlay Configuration**: Configure size selectors, color selectors, button text, and icons per product
+Full CRUD Operations: Create, read, update, delete products with overlay settings
+Real-Time Management: Instant updates across all devices
+Overlay Configuration: Configure size selectors, color selectors, button text, and icons per product
 
 ### ♿ **Accessibility Features**
 - **Keyboard Navigation**: Full keyboard accessibility for all interactive elements
@@ -54,8 +49,7 @@ A modern, responsive e-commerce platform built with Next.js 14, featuring a full
 npm install
 ```
 
-### 2. **Firebase Setup**
-The project is already configured with Firebase. To set up the admin user and sample data:
+
 
 ```bash
 node scripts/setup-admin.js

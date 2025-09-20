@@ -27,13 +27,33 @@ export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
     const coupons = readCouponsFromFile();
-    // If code is provided by admin, use it; otherwise, generate one
-    let code = data.code;
-    if (!code || typeof code !== "string" || !code.trim()) {
-      // Generate a random code, e.g., "AURA-" + 6 uppercase letters/digits
-      code = "AURA-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+    
+    // Use the code provided by admin (required field)
+    const code = data.code?.trim().toUpperCase();
+    if (!code) {
+      return NextResponse.json(
+        { error: "Coupon code is required" }, 
+        { status: 400 }
+      );
     }
-    const newCoupon = { ...data, code, id: Date.now().toString() };
+
+    // Check if coupon code already exists
+    const existingCoupon = coupons.find((c: any) => c.code.toUpperCase() === code);
+    if (existingCoupon) {
+      return NextResponse.json(
+        { error: "Coupon code already exists" }, 
+        { status: 409 }
+      );
+    }
+
+    const newCoupon = { 
+      ...data, 
+      code,
+      id: Date.now().toString(),
+      createdAt: new Date().toISOString(),
+      usedCount: 0
+    };
+    
     const updatedCoupons = [...coupons, newCoupon];
     writeCouponsToFile(updatedCoupons);
     return NextResponse.json(newCoupon);

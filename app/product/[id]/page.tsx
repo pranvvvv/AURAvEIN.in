@@ -67,7 +67,7 @@ export default function ProductPage() {
 
   useEffect(() => {
     const loadProduct = async () => {
-      if (!params.id) return
+      if (!params?.id) return
 
       try {
         setIsLoading(true)
@@ -144,7 +144,7 @@ export default function ProductPage() {
     }
 
     loadProduct()
-  }, [params.id])
+  }, [params?.id])
 
   const handleVideoPlay = async () => {
     if (videoRef.current) {
@@ -522,21 +522,16 @@ export default function ProductPage() {
           </div>
 
           {/* Features */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 sm:pt-6 border-t">
+          <div className="flex justify-center gap-6 sm:gap-8 pt-4 sm:pt-6 border-t">
             <div className="text-center">
-              <Truck className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2 text-gray-600" />
-              <p className="text-xs sm:text-sm font-medium">Free Shipping</p>
-              <p className="text-xs text-gray-500">On orders over ₹999</p>
+              <Truck className="w-4 h-4 mx-auto mb-1 text-gray-600" />
+              <p className="text-xs font-medium">Free Shipping</p>
+              <p className="text-[10px] text-gray-500">On orders over ₹999</p>
             </div>
             <div className="text-center">
-              <Shield className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2 text-gray-600" />
-              <p className="text-xs sm:text-sm font-medium">Secure Payment</p>
-              <p className="text-xs text-gray-500">100% secure checkout</p>
-            </div>
-            <div className="text-center">
-              <RotateCcw className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2 text-gray-600" />
-              <p className="text-xs sm:text-sm font-medium">Easy Returns</p>
-              <p className="text-xs text-gray-500">30-day return policy</p>
+              <Shield className="w-4 h-4 mx-auto mb-1 text-gray-600" />
+              <p className="text-xs font-medium">Secure Payment</p>
+              <p className="text-[10px] text-gray-500">100% secure checkout</p>
             </div>
           </div>
         </div>

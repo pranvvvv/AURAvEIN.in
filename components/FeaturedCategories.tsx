@@ -4,23 +4,23 @@ import Link from "next/link"
 export default function FeaturedCategories() {
   const categories = [
     {
-      name: "COMING SOON",
-      image: "/img.jpg",
+      name: "FRENCH TERRY",
+      image: "/IMG_7127.JPG",
       href: "/shop?category=furniture",
     },
     {
       name: "COTTON TEES",
-      image: "/img1.jpg",
+      image: "/IMG_7222.JPG",
       href: "/shop?category=clothes",
     },
     {
-      name: "NEW DRIP",
-      image: "/img1.jpg",
+      name: "240GSM ",
+      image: "/IMG_7223.JPG",
       href: "/shop?category=accessories",
     },
     {
       name: "SHOP NOW",
-      image: "/img.jpg",
+      image: "/IMG_7218.JPG",
       href: "/shop?category=fashion",
     },
   ]

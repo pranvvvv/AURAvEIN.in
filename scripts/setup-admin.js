@@ -1,6 +1,9 @@
 // scripts/setup-admin.js
 // Run this script to set up the initial admin user and sample data
 
+// ...firebase code removed
+// ...existing code...
+// ...existing code...
 const { initializeApp } = require('firebase/app');
 const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } = require('firebase/auth');
 const { getFirestore, doc, setDoc, collection, addDoc, serverTimestamp, getDocs } = require('firebase/firestore');

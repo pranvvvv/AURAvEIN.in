@@ -2,8 +2,8 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { loginUser, registerUser, logoutUser, getCurrentUser } from "@/lib/hybridService"
-import { getCurrentAdmin, logoutAdmin } from "@/lib/firebaseService"
+// ...hybridService removed, implement auth with new backend if needed
+// ...existing code...
 
 interface User {
   id: string
@@ -42,26 +42,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setLoading(true)
       
       // Check for admin first
-      console.log('Checking for admin...')
-      const admin = await getCurrentAdmin()
-      console.log('Admin check result:', admin)
-      if (admin) {
-        console.log('Admin found, setting user with admin data:', admin)
-        setUser(admin)
-        setLoading(false)
-        return
-      }
+      // ...firebase removed, implement admin check with new backend if needed
 
       // Check for regular user
-      console.log('Checking for regular user...')
-      const currentUser = getCurrentUser()
-      console.log('Regular user check result:', currentUser)
-      if (currentUser) {
-        console.log('Regular user found, setting user')
-        setUser(currentUser)
-        setLoading(false)
-        return
-      }
+      // ...hybridService removed, implement user check with new backend if needed
 
       // No authenticated user found
       console.log('No authenticated user found')
@@ -75,74 +59,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const login = async (email: string, password: string) => {
+    setLoading(true)
     try {
-      console.log('Login attempt for:', email)
-      
-      // First try server-side admin login (sets httpOnly token cookie)
-      try {
-        const res = await fetch('/api/auth/admin-login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        })
-        if (res.ok) {
-          const adminData = await res.json()
-          setUser(adminData)
-          router.push('/admin')
-          return
-        }
-        console.log('Server admin login failed, falling back to client admin login')
-      } catch (err) {
-        console.log('Error calling server admin login:', err)
-      }
-
-      // Try regular user login
-      console.log('Attempting regular user login...')
-      const userData = await loginUser(email, password)
-      console.log('Regular user login successful:', userData)
-      setUser(userData)
-      router.push("/dashboard")
-    } catch (error) {
-      console.error('Login error:', error)
-      throw error
+      // ...hybridService removed, implement login with new backend if needed
+      throw new Error('Login not implemented')
+    } finally {
+      setLoading(false)
     }
   }
 
 
 
   const register = async (userData: any) => {
+    setLoading(true)
     try {
-      const newUser = await registerUser(userData)
-      setUser(newUser)
-      router.push("/dashboard")
-    } catch (error) {
-      console.error('Registration error:', error)
-      throw error
+      // ...hybridService removed, implement register with new backend if needed
+      throw new Error('Register not implemented')
+    } finally {
+      setLoading(false)
     }
   }
 
   const logout = async () => {
+    setLoading(true)
     try {
-      // Check if user is admin and logout accordingly
-      if (user?.isAdmin || user?.role === 'admin') {
-        await logoutAdmin()
-      } else {
-        await logoutUser()
-      }
-      
+      // ...hybridService removed, implement logout with new backend if needed
       setUser(null)
-      
-      // Clear admin session
-      localStorage.removeItem('admin_session')
-      
-      // Redirect to login page
       router.push("/login")
-    } catch (error) {
-      console.error('Logout error:', error)
-      // Force logout even if there's an error
-      setUser(null)
-      localStorage.removeItem('admin_session')
-      router.push("/login")
+    } finally {
+      setLoading(false)
     }
   }
 

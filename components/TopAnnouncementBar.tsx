@@ -17,29 +17,11 @@ export function TopAnnouncementBar() {
   }, []);
 
   return (
-    <div style={{
-      background: "#181818",
-      color: "#fff",
-      textAlign: "center",
-      fontWeight: 600,
-      letterSpacing: 1,
-  fontSize: "0.75rem",
-      height: "40px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      overflow: "hidden",
-      position: "relative"
-    }}>
+    <div className="sticky top-0 z-[60] w-full bg-[#181818] text-white text-center font-semibold tracking-wide text-xs h-10 flex items-center justify-center overflow-hidden" style={{minHeight: 40, position: 'sticky'}}>
       <div
         key={index}
-        style={{
-          position: "absolute",
-          width: "100%",
-          transition: "transform 0.5s cubic-bezier(.4,2,.6,1)",
-          transform: "translateY(0)",
-          animation: "slideUp 0.5s"
-        }}
+        className="w-full transition-transform duration-500"
+        style={{position: 'absolute', animation: 'slideUp 0.5s'}}
       >
         {announcements[index]}
       </div>

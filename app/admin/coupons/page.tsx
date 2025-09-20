@@ -1,5 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAdminAuth } from '@/lib/admin-auth'
 import { 
   addCoupon, 
   getCoupons, 
@@ -10,10 +12,14 @@ import {
 import { Trash2, Edit, Plus, X, Check } from 'lucide-react'
 
 export default function CouponsPage() {
+  const router = useRouter()
+  const { adminUser, loading, isAuthenticated } = useAdminAuth()
   const [coupons, setCoupons] = useState<Coupon[]>([])
-  const [loading, setLoading] = useState(true)
+  const [couponLoading, setCouponLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [editingCoupon, setEditingCoupon] = useState<Coupon | null>(null)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
   const [formData, setFormData] = useState({
     code: '',
     name: '',
@@ -28,8 +34,20 @@ export default function CouponsPage() {
   })
 
   useEffect(() => {
-    loadCoupons()
-  }, [])
+    // Check admin authentication
+    if (!loading) {
+      if (!isAuthenticated) {
+        router.push('/admin/login')
+        return
+      }
+    }
+  }, [isAuthenticated, loading, router])
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadCoupons()
+    }
+  }, [isAuthenticated])
 
   const loadCoupons = async () => {
     try {
@@ -38,16 +56,39 @@ export default function CouponsPage() {
     } catch (error) {
       console.error('Error loading coupons:', error)
     } finally {
-      setLoading(false)
+      setCouponLoading(false)
     }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError('')
+    setSuccess('')
+    
+    if (!formData.code.trim()) {
+      setError('Coupon code is required')
+      return
+    }
+
+    if (!formData.name.trim()) {
+      setError('Coupon name is required')
+      return
+    }
+
+    if (formData.discountValue <= 0) {
+      setError('Discount value must be greater than 0')
+      return
+    }
+
+    if (formData.discountType === 'percentage' && formData.discountValue > 100) {
+      setError('Percentage discount cannot exceed 100%')
+      return
+    }
     
     try {
       const couponData = {
         ...formData,
+        code: formData.code.trim().toUpperCase(),
         discountValue: Number(formData.discountValue),
         maxDiscount: Number(formData.maxDiscount) || undefined,
         minOrderAmount: Number(formData.minOrderAmount) || undefined,
@@ -58,16 +99,23 @@ export default function CouponsPage() {
 
       if (editingCoupon) {
         await updateCoupon(editingCoupon.id, couponData)
+        setSuccess('Coupon updated successfully!')
       } else {
         await addCoupon(couponData)
+        setSuccess('Coupon created successfully!')
       }
 
       setShowForm(false)
       setEditingCoupon(null)
       resetForm()
       loadCoupons()
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving coupon:', error)
+      if (error.message && error.message.includes('already exists')) {
+        setError('Coupon code already exists. Please use a different code.')
+      } else {
+        setError('Failed to save coupon. Please try again.')
+      }
     }
   }
 
@@ -112,6 +160,8 @@ export default function CouponsPage() {
       expiryDate: '',
       isActive: true
     })
+    setError('')
+    setSuccess('')
   }
 
   const generateCouponCode = () => {
@@ -124,6 +174,21 @@ export default function CouponsPage() {
   }
 
   if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
+          <p className="text-gray-600">Checking authentication...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!isAuthenticated) {
+    return null // Will redirect in useEffect
+  }
+
+  if (couponLoading) {
     return (
       <div className="p-6">
         <div className="animate-pulse">
@@ -173,6 +238,18 @@ export default function CouponsPage() {
                 <X size={24} />
               </button>
             </div>
+
+            {error && (
+              <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                {error}
+              </div>
+            )}
+
+            {success && (
+              <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+                {success}
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="flex gap-2">

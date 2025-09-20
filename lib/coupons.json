@@ -68,5 +68,20 @@
     "isActive": true,
     "usedCount": 0,
     "id": "1755517169174"
+  },
+  {
+    "code": "JB8LQX7E",
+    "name": "AURA⚡️",
+    "description": "",
+    "discountType": "percentage",
+    "discountValue": 10,
+    "maxDiscount": 99,
+    "minOrderAmount": 999,
+    "maxUsage": 10,
+    "expiryDate": "2025-09-21",
+    "isActive": true,
+    "usedCount": 0,
+    "id": "1758366062943",
+    "createdAt": "2025-09-20T11:01:02.943Z"
   }
 ]

@@ -1,10 +1,5 @@
-import mongoose, { Schema, models, model } from 'mongoose'
+// ...mongoose code removed
 
-const UserSchema = new Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  role: { type: String, enum: ['admin', 'user'], default: 'user' }
-}, { timestamps: true })
-
-export default (models.User as mongoose.Model<any>) || model('User', UserSchema)
+// Stub User model for UI imports
+const User = {}
+export default User

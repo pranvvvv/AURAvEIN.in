@@ -161,7 +161,9 @@ export default function LoginPage() {
             </p>
             
             <p className="text-xs text-gray-500 mt-2">
-              Admin users will be automatically redirected to admin panel
+              <Link href="/admin/login" className="text-blue-600 hover:text-blue-800 underline">
+                Admin Login →
+              </Link>
             </p>
           </div>
         </CardContent>

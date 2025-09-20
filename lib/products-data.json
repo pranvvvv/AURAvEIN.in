@@ -1,243 +1,203 @@
 [
   {
     "id": "1",
-    "name": " T-SHIRT",
-    "price": 4495,
-    "image": "/placeholder.svg?height=400&width=400",
+    "name": " Shadowfang Tee",
+    "price": 1299,
+    "originalPrice": 1699,
+    "discount": 23,
+    "image": "/front5.png",
     "images": [
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-RMkXrTxnA1vpz17GZLeE524Ifu4M1Q.png",
-      "/placeholder.svg?height=400&width=400",
-      "/placeholder.svg?height=400&width=400"
+      "/front5.png",
+      "/back5.png"
+      
     ],
     "video": "",
     "rating": 0,
     "reviews": 0,
     "category": "t-shirts",
-    "description": "Premium oversized unisex t-shirt featuring a detailed tiger print. Made from 100% organic cotton for maximum comfort and durability.",
+    "description": "A bold black oversized tee featuring an intricate demonic tribal artwork in white and grey, accented with sharp red tribal designs on the sleeves. Dark, raw, and built to stand out.",
     "sizes": [
-      "S",
+      
       "M",
       "L",
       "XL"
     ],
     "isLimitedEdition": true,
-    "quantity": 50
+    "quantity": 10,
+    "isActive": true
   },
   {
     "id": "2",
-    "name": "RED HUMMINGBIRD T-SHIRT",
-    "price": 4495,
-    "image": "/placeholder.svg?height=400&width=400",
+    "name": "Solitude Tee",
+    "price": 999,
+    "originalPrice": 1299,
+    "discount": 23,
+    "image": "/front1.png",
     "images": [
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-RMkXrTxnA1vpz17GZLeE524Ifu4M1Q.png",
-      "/placeholder.svg?height=400&width=400"
+      "/front1.png",
+      "/back1.png"
     ],
     "videoUrl": "",
     "rating": 5,
-    "reviews": 89,
+    "reviews": 5,
     "category": "t-shirts",
-    "description": "Oversized unisex t-shirt with vibrant hummingbird design. Premium quality fabric with a relaxed fit.",
+    "description": "A beige oversized tee featuring a minimal black rune-inspired chest graphic and a striking lower print of a lone figure in deep thought, blending raw streetwear with artistic storytelling.",
     "sizes": [
-      "S",
+      
       "M",
       "L",
-      "XL",
-      "XXL"
+      "XL"
     ],
     "isLimitedEdition": false,
     "quantity": 50,
-    "isFeatured": true
+    "isFeatured": true,
+    "isActive": true
   },
   {
-    "id": "4",
-    "name": "WHITE APEX WILD T-SHIRT",
-    "price": 4195,
-    "image": "/placeholder.svg?height=400&width=400",
-    "videoUrl": "",
+    "id": "3",
+    "name": "Inked Rebel Tee",
+    "price": 999,
+    "originalPrice": 1199,
+    "discount": 17,
+    "image": "/front7.png",
+     "images": [
+      "/front7.png",
+      "/back 7.png"
+    ],
     "rating": 4,
     "reviews": 234,
     "category": "t-shirts",
-    "description": "White oversized t-shirt with unique apex wild design. Made from premium cotton for ultimate comfort.",
+    "description": "A black oversized tee featuring a bold graphic of a blue-haired character with striking tattoos and scars, blending street attitude with raw artistic edge.",
     "sizes": [
-      "S",
+      
       "M",
       "L",
-      "XL",
-      "XXL"
+      "XL"
     ],
     "isLimitedEdition": false,
-    "quantity": 50
+    "quantity": 50,
+    "isActive": true
   },
   {
-    "id": "5",
-    "name": "T-SHIRT",
-    "price": 4495,
-    "image": "/placeholder.svg?height=400&width=400",
-    "videoUrl": "",
+    "id": "4",
+    "name": "Nun of Your Business Tee",
+    "price": 999,
+    "originalPrice": 1495,
+    "discount": 33,
+    "image": "/front3.png",
+     "images": [
+      "/front3.png",
+      "/back3.png"
+    ],
     "rating": 5,
     "reviews": 156,
     "category": "t-shirts",
-    "description": "Black oversized t-shirt featuring an intricate praying mantis design. Premium quality with a relaxed fit.",
+    "description": "Bold oversized beige tee featuring a rebellious nun graphic with gothic text, delivering a raw streetwear edge and unapologetic attitude.",
     "sizes": [
-      "S",
       "M",
       "L",
-      "XL",
-      "XXL"
+      "XL"
     ],
     "isLimitedEdition": false,
-    "quantity": 50
+    "quantity": 50,
+    "isActive": true
   },
   {
-    "id": "6",
-    "name": "T-SHIRT",
-    "price": 4995,
-    "image": "/placeholder.svg?height=400&width=400",
-    "videoUrl": "",
+    "id": "5",
+    "name": "Neon Attitude Tee",
+    "price": 999,
+    "originalPrice": 1695,
+    "discount": 41,
+    "image": "/front4.png",
+     "images": [
+      "/front4.png",
+      "/back4.png"
+    ],
     "rating": 4,
     "reviews": 92,
     "category": "t-shirts",
-    "description": "Navy blue oversized polo t-shirt with saddle league emblem. Perfect for a smart casual look.",
+    "description": "Black oversized tee with a vibrant anime-inspired graphic, mixing bold colors and fierce expression for a loud, fearless streetwear statement.",
     "sizes": [
-      "S",
+     
       "M",
       "L",
-      "XL",
-      "XXL"
+      "XL"
     ],
     "isLimitedEdition": false,
-    "quantity": 50
+    "quantity": 50,
+    "isActive": true
   },
   {
-    "id": "7",
-    "name": "T-SHIRT",
-    "price": 4495,
-    "image": "/placeholder.svg?height=400&width=400",
-    "videoUrl": "",
+    "id": "6",
+    "name": " Web of Silence Tee",
+    "price": 999,
+    "originalPrice": 1495,
+    "discount": 33,
+    "image": "/front2,6.png",
+    "images": [
+      "/front2,6.png",
+      "/back2.png"
+    ],
     "rating": 5,
     "reviews": 78,
     "category": "t-shirts",
-    "description": "Green oversized t-shirt with vibrant sunflower design. Made from 100% organic cotton.",
+    "description": "Black oversized tee featuring chained skulls and a web backdrop, crafted with a dark metal-inspired graphic for a fierce underground vibe.",
     "sizes": [
-      "S",
       "M",
       "L",
-      "XL",
-      "XXL"
+      "XL"
     ],
     "isLimitedEdition": false,
-    "quantity": 50
+    "quantity": 50,
+    "isActive": true
+  },
+  {
+    "id": "7",
+    "name": " Midnight Edge Tee",
+    "price": 999,
+    "originalPrice": 1695,
+    "discount": 41,
+    "image": "/front2,6.png",
+     "images": [
+      "/front2,6.png",
+      "/back6.png"
+    ],
+    "rating": 4,
+    "reviews": 145,
+    "category": "t-shirts",
+    "description": "Bold, black, and built to stand out—this tee cuts through the noise with sharp style and effortless attitude.",
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "isLimitedEdition": false,
+    "quantity": 50,
+    "isActive": true
   },
   {
     "id": "8",
-    "name": "T-SHIRT",
-    "price": 4995,
-    "image": "/placeholder.svg?height=400&width=400",
-    "videoUrl": "",
-    "rating": 4,
-    "reviews": 145,
-    "category": "t-shirts",
-    "description": "Black oversized t-shirt featuring a detailed dragon design. Premium quality with a comfortable fit.",
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    "isLimitedEdition": false,
-    "quantity": 50
-  },
-  {
-    "id": "9",
-    "name": "T-SHIRT",
-    "price": 4995,
-    "image": "/placeholder.svg?height=400&width=400",
-    "videoUrl": "",
-    "rating": 4,
-    "reviews": 145,
-    "category": "t-shirts",
-    "description": "Black oversized t-shirt featuring a detailed dragon design. Premium quality with a comfortable fit.",
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
-    "isLimitedEdition": false,
-    "quantity": 50
-  },
-  {
-    "id": "1756295476507"
-  },
-  {
-    "id": "1756295523122",
-    "name": "tee",
+    "name": " Heatwave Tee",
     "price": 999,
-    "category": "test",
-    "description": "added via test",
-    "images": [
-      "/placeholder.svg"
+    "originalPrice": 1695,
+    "discount": 41,
+    "image": "/front9.png",
+     "images": [
+      "/front9.png",
+      "/back9.png"
     ],
-    "isFeatured": true
-  },
-  {
-    "id": "1756296046332",
-    "name": "Product via server-login",
-    "price": 199,
-    "category": "test",
-    "images": [
-      "/placeholder.svg"
-    ],
-    "isFeatured": false
-  },
-  {
-    "id": "1756296190445",
-    "name": "tee",
-    "price": 1299,
-    "originalPrice": 1599,
-    "discount": 19,
-    "category": "test-products",
-    "description": "Automatically added test product",
-    "images": [
-      "/placeholder.svg"
-    ],
+    "rating": 4,
+    "reviews": 145,
+    "category": "t-shirts",
+    "description": "Fired up and fearless, this tee brings the heat with a clean cut and a punch of attitude.",
     "sizes": [
-      "S",
+      
       "M",
-      "L"
+      "L",
+      "XL"
     ],
-    "colors": [
-      "black"
-    ],
-    "stock": 100,
-    "isFeatured": false,
-    "isActive": true,
-    "quantity": 100
-  },
-  {
-    "id": "1756296324250",
-    "name": "tee",
-    "price": 1299,
-    "originalPrice": 1599,
-    "discount": 19,
-    "category": "test-products",
-    "description": "Automatically added test product",
-    "images": [
-      "/placeholder.svg"
-    ],
-    "sizes": [
-      "S",
-      "M",
-      "L"
-    ],
-    "colors": [
-      "black"
-    ],
-    "stock": 100,
-    "isFeatured": false,
-    "isActive": true,
-    "quantity": 100
+    "isLimitedEdition": false,
+    "quantity": 50,
+    "isActive": true
   }
 ]
