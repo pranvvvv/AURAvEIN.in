@@ -45,17 +45,45 @@ export default function NewsletterPopup() {
     }
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle newsletter signup
-    console.log("Newsletter signup:", email)
-    alert("Thank you for subscribing!")
     
-    // Mark popup as shown and hide it
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('newsletter-popup-shown', 'true')
+    if (!email || !email.trim()) {
+      alert("Please enter a valid email address")
+      return
     }
-    setIsVisible(false)
+
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email.trim() }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        if (data.existing) {
+          alert("You're already subscribed to our newsletter!")
+        } else {
+          alert("Thank you for subscribing to our newsletter!")
+        }
+        
+        // Mark popup as shown and hide it
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('newsletter-popup-shown', 'true')
+        }
+        setEmail("")
+        setIsVisible(false)
+      } else {
+        alert(data.error || "Something went wrong. Please try again.")
+      }
+    } catch (error) {
+      console.error('Newsletter subscription error:', error)
+      alert("Network error. Please check your connection and try again.")
+    }
   }
 
   const handleClose = () => {

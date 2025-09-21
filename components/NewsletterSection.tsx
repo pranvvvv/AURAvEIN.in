@@ -9,12 +9,39 @@ import { Input } from "@/components/ui/input"
 export default function NewsletterSection() {
   const [email, setEmail] = useState("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle newsletter signup
-    console.log("Newsletter signup:", email)
-    alert("Thank you for subscribing!")
-    setEmail("")
+    
+    if (!email || !email.trim()) {
+      alert("Please enter a valid email address")
+      return
+    }
+
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email.trim() }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        if (data.existing) {
+          alert("You're already subscribed to our newsletter!")
+        } else {
+          alert("Thank you for subscribing to our newsletter!")
+        }
+        setEmail("")
+      } else {
+        alert(data.error || "Something went wrong. Please try again.")
+      }
+    } catch (error) {
+      console.error('Newsletter subscription error:', error)
+      alert("Network error. Please check your connection and try again.")
+    }
   }
 
   return (

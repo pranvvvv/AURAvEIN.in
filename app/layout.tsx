@@ -1,9 +1,15 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import ClientLayout from "./clientLayout"
 
 const inter = Inter({ subsets: ["latin"] })
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#000000',
+}
 
 export const metadata: Metadata = {
   title: "AURAvEIN.IN - Premium Oversized Fashion",
@@ -13,9 +19,31 @@ export const metadata: Metadata = {
   keywords: ["auravein", "fashion", "clothing", "premium", "online shopping", "oversized", "streetwear", "french terry", "cotton tees"],
   authors: [{ name: "AURAvEIN" }],
   creator: "PRANAV",
-  viewport: "width=device-width, initial-scale=1",
-  themeColor: "#000000",
   robots: "index, follow",
+  icons: [
+    {
+      rel: 'icon',
+      type: 'image/svg+xml',
+      url: '/favicon.svg',
+    },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '32x32',
+      url: '/WhatsApp Image 2025-09-21 at 14.48.17_48bd4937.jpg',
+    },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '16x16',
+      url: '/WhatsApp Image 2025-09-21 at 14.48.17_48bd4937.jpg',
+    },
+    {
+      rel: 'apple-touch-icon',
+      sizes: '180x180',
+      url: '/WhatsApp Image 2025-09-21 at 14.48.17_48bd4937.jpg',
+    },
+  ],
   alternates: {
     canonical: "https://auravein.store"
   },
@@ -51,6 +79,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Favicon configurations */}
+        <link rel="icon" type="image/png" sizes="32x32" href="/WhatsApp Image 2025-09-21 at 14.48.17_48bd4937.jpg" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/WhatsApp Image 2025-09-21 at 14.48.17_48bd4937.jpg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/WhatsApp Image 2025-09-21 at 14.48.17_48bd4937.jpg" />
+        <link rel="shortcut icon" href="/WhatsApp Image 2025-09-21 at 14.48.17_48bd4937.jpg" />
+        
         {/* Google Search Console Verification - Replace with your actual verification code */}
         <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE_HERE" />
         

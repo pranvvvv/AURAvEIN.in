@@ -196,10 +196,10 @@ export default function ProductCard({ product, viewMode = "grid", overlaySetting
 
   if (viewMode === "list") {
     return (
-      <div className="flex gap-6 p-6 bg-white rounded-lg shadow-sm border hover:shadow-md transition-all duration-300">
+      <Link href={`/product/${product.id}`} className="block">
+        <div className="flex gap-6 p-6 bg-white rounded-lg shadow-sm border hover:shadow-md transition-all duration-300 cursor-pointer">
         <div className="product-image-container w-48 h-48 flex-shrink-0 overflow-hidden rounded-lg">
-          <Link href={`/product/${product.id}`} tabIndex={0}>
-            <Image
+          <Image
               src={primaryImage && !primaryImage.includes('/placeholder.svg') ? primaryImage : "/placeholder.svg"}
               alt={product.name}
               width={200}
@@ -211,7 +211,6 @@ export default function ProductCard({ product, viewMode = "grid", overlaySetting
               blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
               className="product-image w-full h-full object-cover transition-transform duration-300 hover:scale-105"
             />
-          </Link>
           {product.videoUrl && (
             <video
               className="video-hover"
@@ -227,11 +226,9 @@ export default function ProductCard({ product, viewMode = "grid", overlaySetting
         </div>
         <div className="flex-1 space-y-4">
           <div>
-            <Link href={`/product/${product.id}`} tabIndex={0}>
-              <h3 className="text-sm font-medium uppercase tracking-wider hover:text-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 rounded">
-                {product.name}
-              </h3>
-            </Link>
+            <h3 className="text-sm font-medium uppercase tracking-wider hover:text-gray-600 transition-colors">
+              {product.name}
+            </h3>
             
             {/* Display Quantity and Limited Edition Status */}
             <ProductQuantity 
@@ -245,11 +242,15 @@ export default function ProductCard({ product, viewMode = "grid", overlaySetting
           
           {/* Size Selection for List View */}
           {settings.showSizeSelector && product.sizes && product.sizes.length > 0 && (
-            <div className="flex gap-2">
+            <div className="flex gap-2" onClick={(e) => e.preventDefault()}>
               {product.sizes.map((size) => (
                 <button
                   key={size}
-                  onClick={() => setSelectedSize(size)}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    setSelectedSize(size)
+                  }}
                   onKeyDown={(e) => handleKeyDown(e, () => setSelectedSize(size))}
                   className={`px-3 py-1 text-xs border rounded transition-all duration-200 size-button focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 ${
                     selectedSize === size
@@ -266,13 +267,17 @@ export default function ProductCard({ product, viewMode = "grid", overlaySetting
 
           {/* Color Selection for List View removed as requested */}
           
-          <div className="flex gap-2">
+          <div className="flex gap-2" onClick={(e) => e.preventDefault()}>
             {settings.showAddToCart && (
               <Button
                 className={`flex-1 text-xs uppercase tracking-wider transition-all duration-300 ${
                   isAddingToCart ? "animate-pulse bg-green-600" : ""
                 }`}
-                onClick={handleAddToCart}
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  handleAddToCart()
+                }}
                 disabled={isAddingToCart}
                 aria-label={`${settings.buttonText} ${product.name}`}
               >
@@ -283,16 +288,18 @@ export default function ProductCard({ product, viewMode = "grid", overlaySetting
           </div>
         </div>
       </div>
+      </Link>
     )
   }
 
   return (
-    <div
-      className="group bg-white overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-all duration-300 relative focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      tabIndex={0}
-    >
+    <Link href={`/product/${product.id}`} className="block">
+      <div
+        className="group bg-white overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-all duration-300 relative focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 cursor-pointer"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        tabIndex={0}
+      >
       {/* Fly to cart animation */}
       {showFlyAnimation && (
         <div className="absolute inset-0 z-50 pointer-events-none">
@@ -336,7 +343,7 @@ export default function ProductCard({ product, viewMode = "grid", overlaySetting
             size="icon"
             variant="ghost"
             aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-            onClick={handleWishlist}
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleWishlist(); }}
             className={`${isWishlisted ? "text-red-500" : ""} bg-white/80 hover:bg-white/90 backdrop-blur-sm transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1`}
           >
             <Heart fill={isWishlisted ? "currentColor" : "none"} />
@@ -345,7 +352,7 @@ export default function ProductCard({ product, viewMode = "grid", overlaySetting
             size="icon"
             variant="ghost"
             aria-label="Share product"
-            onClick={handleShare}
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleShare(); }}
             className="bg-white/80 hover:bg-white/90 backdrop-blur-sm transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-1"
           >
             <Share2 />
@@ -363,7 +370,7 @@ export default function ProductCard({ product, viewMode = "grid", overlaySetting
                 {product.sizes.map((size) => (
                   <button
                     key={size}
-                    onClick={() => setSelectedSize(size)}
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSelectedSize(size); }}
                     onKeyDown={(e) => handleKeyDown(e, () => setSelectedSize(size))}
                     className={`px-3 py-1 text-xs border rounded transition-all duration-200 size-button focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-1 ${
                       selectedSize === size
@@ -384,7 +391,7 @@ export default function ProductCard({ product, viewMode = "grid", overlaySetting
                 {product.colors.map((color) => (
                   <button
                     key={color}
-                    onClick={() => setSelectedColor(color)}
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSelectedColor(color); }}
                     onKeyDown={(e) => handleKeyDown(e, () => setSelectedColor(color))}
                     className={`px-3 py-1 text-xs border rounded transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-1 ${
                       selectedColor === color
@@ -405,7 +412,7 @@ export default function ProductCard({ product, viewMode = "grid", overlaySetting
                 className={`bg-white text-black hover:bg-gray-100 text-xs uppercase tracking-wider transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-1 ${
                   isAddingToCart ? "animate-pulse bg-green-600 text-white" : ""
                 }`}
-                onClick={handleAddToCart}
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleAddToCart(); }}
                 disabled={isAddingToCart}
                 aria-label={`${settings.buttonText} ${product.name}`}
               >
@@ -447,5 +454,6 @@ export default function ProductCard({ product, viewMode = "grid", overlaySetting
         </div>
       </div>
     </div>
+    </Link>
   )
 }
