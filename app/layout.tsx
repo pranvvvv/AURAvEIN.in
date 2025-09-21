@@ -85,8 +85,8 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="/WhatsApp Image 2025-09-21 at 14.48.17_48bd4937.jpg" />
         <link rel="shortcut icon" href="/WhatsApp Image 2025-09-21 at 14.48.17_48bd4937.jpg" />
         
-        {/* Google Search Console Verification - Replace with your actual verification code */}
-        <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE_HERE" />
+        {/* Google Search Console Verification */}
+        <meta name="google-site-verification" content="sm3-6cYkcAoHtSTy0mGS2EIMf8NQqhsv4kEWMWHj4_Q" />
         
         {/* Preload critical images */}
         <link rel="preload" href="/IMG_7127.JPG" as="image" type="image/jpeg" />
