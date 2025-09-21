@@ -3,6 +3,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Performance Optimizations */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+img, video {
+  content-visibility: auto;
+}
+
+/* Critical CSS for above-the-fold content */
+.hero-slide {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

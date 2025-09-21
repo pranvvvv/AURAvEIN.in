@@ -2,14 +2,27 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
+import dynamic from "next/dynamic"
 import { useAuth } from "@/lib/auth-context"
 import HeroSection from "@/components/HeroSection"
 import FeaturedCategories from "@/components/FeaturedCategories"
-import FeaturedProducts from "@/components/FeaturedProducts"
-import PromoBanner from "@/components/PromoBanner"
-import BlogSection from "@/components/BlogSection"
-import NewsletterSection from "@/components/NewsletterSection"
-import InstagramFeed from "@/components/InstagramFeed"
+
+// Dynamic imports for below-the-fold components
+const FeaturedProducts = dynamic(() => import("@/components/FeaturedProducts"), {
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse rounded-lg" />,
+})
+const PromoBanner = dynamic(() => import("@/components/PromoBanner"), {
+  loading: () => <div className="h-64 bg-gray-100 animate-pulse rounded-lg" />,
+})
+const BlogSection = dynamic(() => import("@/components/BlogSection"), {
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse rounded-lg" />,
+})
+const NewsletterSection = dynamic(() => import("@/components/NewsletterSection"), {
+  loading: () => <div className="h-48 bg-gray-100 animate-pulse rounded-lg" />,
+})
+const InstagramFeed = dynamic(() => import("@/components/InstagramFeed"), {
+  loading: () => <div className="h-64 bg-gray-100 animate-pulse rounded-lg" />,
+})
 
 export default function Home() {
   const router = useRouter()

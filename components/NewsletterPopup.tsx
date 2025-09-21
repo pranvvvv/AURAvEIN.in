@@ -12,11 +12,34 @@ export default function NewsletterPopup() {
   const [email, setEmail] = useState("")
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true)
-    }, 5000) // Show after 5 seconds
+    // Check if popup has been shown before
+    const hasSeenPopup = localStorage.getItem('newsletter-popup-shown')
+    const lastShownTime = localStorage.getItem('newsletter-popup-last-shown')
+    
+    if (!hasSeenPopup) {
+      const timer = setTimeout(() => {
+        setIsVisible(true)
+        // Record when popup was shown
+        localStorage.setItem('newsletter-popup-last-shown', Date.now().toString())
+      }, 5000) // Show after 5 seconds
 
-    return () => clearTimeout(timer)
+      return () => clearTimeout(timer)
+    } else if (lastShownTime) {
+      // If popup was shown before, check if 24 hours have passed
+      const lastShown = parseInt(lastShownTime)
+      const twentyFourHours = 24 * 60 * 60 * 1000 // 24 hours in milliseconds
+      
+      if (Date.now() - lastShown > twentyFourHours) {
+        // Reset the popup after 24 hours
+        localStorage.removeItem('newsletter-popup-shown')
+        const timer = setTimeout(() => {
+          setIsVisible(true)
+          localStorage.setItem('newsletter-popup-last-shown', Date.now().toString())
+        }, 10000) // Show after 10 seconds on return visits
+
+        return () => clearTimeout(timer)
+      }
+    }
   }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -24,10 +47,15 @@ export default function NewsletterPopup() {
     // Handle newsletter signup
     console.log("Newsletter signup:", email)
     alert("Thank you for subscribing!")
+    
+    // Mark popup as shown and hide it
+    localStorage.setItem('newsletter-popup-shown', 'true')
     setIsVisible(false)
   }
 
   const handleClose = () => {
+    // Mark popup as shown when user closes it
+    localStorage.setItem('newsletter-popup-shown', 'true')
     setIsVisible(false)
   }
 

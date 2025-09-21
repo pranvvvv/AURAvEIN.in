@@ -76,6 +76,7 @@ export default function HeroSection() {
               loop
               muted
               playsInline
+              preload="none"
               className="object-cover w-full h-full absolute inset-0"
               style={{ zIndex: 0 }}
             />
@@ -84,8 +85,12 @@ export default function HeroSection() {
               src={slide.image || "/placeholder.svg"}
               alt={`Hero Slide ${index + 1}`}
               fill
+              sizes="100vw"
+              quality={60}
+              priority={index === 0}
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
               className="object-cover"
-              priority
             />
           )}
           <div className="absolute inset-0 bg-black/30" />
