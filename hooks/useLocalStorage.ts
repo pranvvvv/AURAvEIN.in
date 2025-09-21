@@ -6,6 +6,10 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => voi
   // Pass initialValue so that this state is not null on the first render.
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
+      // Check if window is available (client-side)
+      if (typeof window === 'undefined') {
+        return initialValue;
+      }
       // Get from local storage by key
       const item = window.localStorage.getItem(key);
       // Parse stored json or if none return initialValue
@@ -20,6 +24,10 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => voi
   // useEffect to update local storage when the state changes
   useEffect(() => {
     try {
+      // Check if window is available (client-side)
+      if (typeof window === 'undefined') {
+        return;
+      }
       // Allow value to be a function so we have same API as useState
       const valueToStore =
         typeof storedValue === 'function'

@@ -12,6 +12,9 @@ export default function NewsletterPopup() {
   const [email, setEmail] = useState("")
 
   useEffect(() => {
+    // Only run on client side
+    if (typeof window === 'undefined') return
+
     // Check if popup has been shown before
     const hasSeenPopup = localStorage.getItem('newsletter-popup-shown')
     const lastShownTime = localStorage.getItem('newsletter-popup-last-shown')
@@ -49,13 +52,17 @@ export default function NewsletterPopup() {
     alert("Thank you for subscribing!")
     
     // Mark popup as shown and hide it
-    localStorage.setItem('newsletter-popup-shown', 'true')
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('newsletter-popup-shown', 'true')
+    }
     setIsVisible(false)
   }
 
   const handleClose = () => {
     // Mark popup as shown when user closes it
-    localStorage.setItem('newsletter-popup-shown', 'true')
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('newsletter-popup-shown', 'true')
+    }
     setIsVisible(false)
   }
 
