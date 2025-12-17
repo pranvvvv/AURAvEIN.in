@@ -1,201 +1,83 @@
-"use client"
+'use client';
 
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { useAuth } from "@/lib/auth-context"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { User, ShoppingBag, Package, LogOut } from "lucide-react"
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
 
 export default function DashboardPage() {
-  const router = useRouter()
-  const { user, loading, isAuthenticated, logout } = useAuth()
+  const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !isAuthenticated) {
-      router.push("/login")
-    }
-  }, [loading, isAuthenticated, router])
+    const fetchUser = async () => {
+      try {
+        const res = await fetch('/api/me');
+        if (res.ok) {
+          const data = await res.json();
+          setUser(data);
+        } else {
+          setError('Failed to fetch user data');
+        }
+      } catch (err) {
+        setError('An unexpected error occurred.');
+      }
+    };
+    fetchUser();
+  }, []);
 
   const handleLogout = async () => {
     try {
-      await logout()
-      router.push("/")
-    } catch (error) {
-      console.error('Logout error:', error)
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch (err) {
+      console.error('Logout failed:', err);
+    } finally {
+      router.push('/login');
     }
+  };
+
+  if (error) {
+    return <div className="flex items-center justify-center h-screen text-red-500">{error}</div>;
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
-          <p className="text-gray-600">Redirecting to login...</p>
-        </div>
-      </div>
-    )
+  if (!user) {
+    return <div className="flex items-center justify-center h-screen">Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">My Dashboard</h1>
-              <p className="text-sm text-gray-600">Welcome back, {user?.name}</p>
-            </div>
-            <Button onClick={handleLogout} variant="outline" className="flex items-center gap-2">
-              <LogOut className="w-4 h-4" />
-              Logout
-            </Button>
+    <div className="flex flex-col items-center justify-center h-screen p-8">
+      <div className="w-full max-w-4xl text-right">
+        <button
+          onClick={handleLogout}
+          className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600"
+        >
+          Logout
+        </button>
+      </div>
+      <div className="flex flex-col items-center w-full mt-8">
+        <h1 className="text-4xl font-bold">Welcome, {user.name}</h1>
+        <p className="mt-4 text-lg">Your email is: {user.email}</p>
+
+        <div className="grid w-full grid-cols-1 gap-8 mt-12 md:grid-cols-2 lg:grid-cols-3">
+          <div className="p-6 text-center bg-gray-100 border rounded-lg">
+            <h2 className="text-xl font-semibold">CRM Module</h2>
+            <p className="mt-2 text-gray-600">Coming soon...</p>
           </div>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Total Orders</p>
-                  <p className="text-2xl font-bold">0</p>
-                </div>
-                <ShoppingBag className="w-8 h-8 text-blue-600" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Pending Orders</p>
-                  <p className="text-2xl font-bold">0</p>
-                </div>
-                <Package className="w-8 h-8 text-yellow-600" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Total Spent</p>
-                  <p className="text-2xl font-bold">₹0</p>
-                </div>
-                <User className="w-8 h-8 text-green-600" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Profile Information */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <User className="w-5 h-5" />
-              Profile Information
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                <p className="text-gray-900">{user?.name || 'Not provided'}</p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <p className="text-gray-900">{user?.email || 'Not provided'}</p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                <p className="text-gray-900">{user?.phone || 'Not provided'}</p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Member Since</label>
-                <p className="text-gray-900">Just joined</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <ShoppingBag className="w-5 h-5" />
-                Shopping
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <Button className="w-full justify-start" variant="outline" onClick={() => router.push("/shop")}>
-                <ShoppingBag className="w-4 h-4 mr-2" />
-                Browse Products
-              </Button>
-              <Button className="w-full justify-start" variant="outline" onClick={() => router.push("/cart")}>
-                <Package className="w-4 h-4 mr-2" />
-                View Cart
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Package className="w-5 h-5" />
-                Orders
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <Button className="w-full justify-start" variant="outline" disabled>
-                <Package className="w-4 h-4 mr-2" />
-                Order History
-              </Button>
-              <Button className="w-full justify-start" variant="outline" disabled>
-                <Package className="w-4 h-4 mr-2" />
-                Track Orders
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <User className="w-5 h-5" />
-                Account
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <Button className="w-full justify-start" variant="outline" disabled>
-                <User className="w-4 h-4 mr-2" />
-                Edit Profile
-              </Button>
-              <Button className="w-full justify-start" variant="outline" disabled>
-                <User className="w-4 h-4 mr-2" />
-                Change Password
-              </Button>
-            </CardContent>
-          </Card>
+          <div className="p-6 text-center bg-gray-100 border rounded-lg">
+            <h2 className="text-xl font-semibold">Website Builder</h2>
+            <p className="mt-2 text-gray-600">Coming soon...</p>
+          </div>
+          <div className="p-6 text-center bg-gray-100 border rounded-lg">
+            <h2 className="text-xl font-semibold">Community Engine</h2>
+            <p className="mt-2 text-gray-600">Coming soon...</p>
+          </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
